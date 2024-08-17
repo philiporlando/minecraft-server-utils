@@ -1,3 +1,4 @@
+# /etc/systemd/system/minecraft@survival.service
 # %i = survival
 [Unit]
 Description=Minecraft Server: %i
