@@ -1,0 +1,24 @@
+# %i = survival
+[Unit]
+Description=Minecraft Server: %i
+After=network.target
+Requires=network-online.target
+Conflicts=shutdown.target
+
+[Service]
+WorkingDirectory=/opt/minecraft/%i
+Type=forking
+
+User=minecraft
+Group=minecraft
+
+# Restart=always
+Restart=no
+# JVM Tuning: Optimized Garbage Collection
+# https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
+ExecStart=/usr/bin/tmux new-session -s minecraft -d '/usr/bin/java -Xms12G -Xmx12G -jar server.jar nogui'
+ExecStop=/usr/bin/tmux send-keys -t minecraft:0.0 'say SERVER SHUTTING DOWN. Saving map...' C-m 'save-all' C-m 'stop' C-m
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target
