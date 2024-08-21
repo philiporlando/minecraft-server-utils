@@ -17,13 +17,11 @@ PrivateDevices=true
 NoNewPrivileges=true
 NotifyAccess=all
 Restart=no
-ExecStart=/usr/bin/java -Xms4G -Xmx12G -jar server.jar nogui
-ExecStop=/bin/bash -c 'echo "say SERVER SHUTTING DOWN. Saving map..." > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "save-all" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "stop" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0'ExecStop=/bin/bash -c 'echo "say SERVER SHUTTING DOWN. Saving map..." > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "save-all" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "stop" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0'
 # JVM Tuning: Optimized Garbage Collection
 # https://aikar.co/2018/07/02/tuning-the-jvm-g1gc-garbage-collector-flags-for-minecraft/
-# ExecStart=/usr/bin/tmux new-session -s minecraft-%i -d '/usr/bin/java -Xms4G -Xmx12G -jar server.jar nogui'
-# ExecStop=/bin/bash -c 'if tmux has-session -t minecraft-%i 2>/dev/null; then tmux send-keys -t minecraft-%i "say SERVER SHUTTING DOWN. Saving map..." C-m "save-all" C-m "stop" C-m; fi'
-# ExecStop=/bin/sleep 5
+ExecStart=/usr/bin/java -Xms4G -Xmx12G -jar server.jar nogui
+ExecStop=/bin/bash -c 'echo "say SERVER SHUTTING DOWN. Saving map..." > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "save-all" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "stop" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0'ExecStop=/bin/bash -c 'echo "say SERVER SHUTTING DOWN. Saving map..." > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "save-all" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0; echo "stop" > /proc/$(cat /opt/minecraft/%i/server.pid)/fd/0'
+ExecStop=/bin/sleep 5
 
 [Install]
 WantedBy=multi-user.target
